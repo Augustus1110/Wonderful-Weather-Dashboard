@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wonderful Weather Dashboard</title>
+    <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
     <input type="text" id="user_input">
@@ -13,14 +14,18 @@
     </button>
 
     <section id="current_weather">
-        <h1 id="city"></h1>
-        <h2 id="date"></h2>
-        <h3 id="temperature"></h3>
-        <h3 id="wind"></h3>
-        <h3 id="humidity"></h3>
+        <h2>Current Weather</h2>
+        <p id="city"></p>
+        <p id="date"></p>
+        <p id="temperature"></p>
+        <p id="wind"></p>
+        <p id="humidity"></p>
     </section>
 
-    <section id="five_day_forecast"></section>
+    <section id="next_weather">
+        <h2>Five Day Forecast</h2>
+        <div id="next_weather_container"></div>
+    </section>
 
     <script src="https://unpkg.com/dayjs/dayjs.min.js"></script>
     <script src="./assets/script.js"></script>
