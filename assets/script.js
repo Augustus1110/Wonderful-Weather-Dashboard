@@ -6,16 +6,17 @@
     var currentWeather= document.getElementById("current_weather");
     var city = document.getElementById("city");
     var date = document.getElementById("date");
-    var temp =document.getElementById("temp");
+    var temperature =document.getElementById("temperature");
     var wind = document.getElementById("wind");
     var humidity = document.getElementById("humidity");
     var fiveDayForecast = document.getElementById("five_day_forecast"); 
 
 
-    //this is the event listener for the submit button
-    submitButton.addEventListener("click", function(event) {});
+    //This is the event listener for the submit button
 
-
+    submitButton.addEventListener("click", function() {
+        getCoordinates(userInput.value)
+    });
 
     //I have to write a function that will get the coordinates of the city that the user inputs
     function getCoordinates (city){
@@ -38,23 +39,26 @@
         .then(function(response) {
             return response.json();
         }).then(function(data) {
-    })
-   };
+            showCurrentWeather(data);
+            console.log(data);
+        });
+    };
 
-  
+      
  //I have to write a function will display the current weather
- function displayCurrentWeather (currentWeather, searchTerm) {
-    if currentWeather.city) {
-        currentWeather
-    }
+ var showCurrentWeather = function(data) {
+    city.textContent = data.name;
+    date.textContent = dayjs.unix(data.dt).format('MM/DD/YYYY');
+    temperature.textContent = "Temperature: " + data.main.temp + " °F";
+    wind.textContent = "Wind Speed: " + data.wind.speed + " mph";
+    humidity.textContent = "Humidity: " + data.main.humidity + " %";
+
  }
 
+console.log (showCurrentWeather);
    
 //this is the geocoding API call
  // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key} 
   
 //this is latitude and longitude API call
- //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
-
-
-
+ /* https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key} */
