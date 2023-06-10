@@ -17,13 +17,15 @@ submitButton.addEventListener("click", function () {
   getCurrentCoordinates(userInput.value);
 });
 
+//All API calls and keys are from OpenWeatherMap.org
+
 //This is my unique current weather API key
 //b12be20cab068cdc779326a35a3ed4c2
 
-//This is the current weather geocoding API call
+//Current weather geocoding API call
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
-//This is the current weather latitude and longitude API call
+//Current weather latitude and longitude API call
 //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}//
 
 
