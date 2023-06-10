@@ -1,8 +1,3 @@
-//This is my unique current weather API key
-//b12be20cab068cdc779326a35a3ed4c2
-
-//This my unique 5 day weather forecast API key
-//b12be20cab068cdc779326a35a3ed4c2
 
 var userInput = document.getElementById("user_input");
 var submitButton = document.getElementById("submit_button");
@@ -13,8 +8,8 @@ var temperature = document.getElementById("temperature");
 var wind = document.getElementById("wind");
 var humidity = document.getElementById("humidity");
 var fiveDayForecast = document.getElementById("five_day_forecast");
-var nextWeather = document.getElementById("next_weather");
-var nextWeatherContainer = document.getElementById("next_weather_container");
+var fiveDayWeather = document.getElementById("five_day_weather");
+var fiveDayContainer = document.getElementById("five_day_container");
 
 //This is the event listener for the submit button
 
@@ -22,46 +17,40 @@ submitButton.addEventListener("click", function () {
   getCoordinates(userInput.value);
 });
 
-//this is the geocoding API call
+//This is my unique current weather API key
+//b12be20cab068cdc779326a35a3ed4c2
+
+//This is the current weather geocoding API call
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
-//this is latitude and longitude API call
+//This is the current weather latitude and longitude API call
 //api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}//
+
 
 //I have to write a function that will get the coordinates of the city that the user inputs
 function getCoordinates(city) {
-  var url =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
-    city +
-    "&limit=1&appid=b12be20cab068cdc779326a35a3ed4c2";
+  var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=b12be20cab068cdc779326a35a3ed4c2";
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       var lat = data[0].lat;
       var lon = data[0].lon;
       getCurrentWeather(lat, lon);
-    getFiveDayForecast(lat, lon);
+      getFiveDayForecast(lat, lon);
     });
 }
 
 //I have to write a function that will get the current weather based on the coordinates
 function getCurrentWeather(lat, lon) {
-  var url =
-    "https://api.openweathermap.org/data/2.5/weather?lat=" +
-    lat +
-    "&lon=" +
-    lon +
-    "&appid=b12be20cab068cdc779326a35a3ed4c2&units=imperial";
+  var url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=b12be20cab068cdc779326a35a3ed4c2&units=imperial";
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       showCurrentWeather(data);
-      console.log(data);
     });
 }
 
@@ -85,18 +74,13 @@ console.log(showCurrentWeather);
 
 // function to get coordinates using the API call
 function fiveDayCoordinates(city) {
-  var url =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
-    city + "&appid=b12be20cab068cdc779326a35a3ed4c2";
-  console.log(url);
-
+  var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=b12be20cab068cdc779326a35a3ed4c2";
   fetch(url)
     .then(function (response) {
       return response.json();
     })
 
     .then(function (data) {
-        console.log(data);
         var lat = data[0].lat;
         var lon = data[0].lon;
         getCurrentWeather(lat, lon);
@@ -109,31 +93,22 @@ function fiveDayCoordinates(city) {
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 
-
 //I have to write a function that will get the 5 day forecast based on the coordinates
 
 function getFiveDayForecast(lat, lon) {
-  var url =
-    "https://api.openweathermap.org/data/2.5/forecast?lat=" +
-    lat +
-    "&lon=" +
-    lon +
-    "&appid=b12be20cab068cdc779326a35a3ed4c2&units=imperial";
-  console.log(url);
-
+  var url = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=b12be20cab068cdc779326a35a3ed4c2&units=imperial";
   fetch(url)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       showFiveDayForecast(data);
-      console.log(data);
     })
 }
 
 //I have to write a function that will display the 5 day forecast
 var showFiveDayForecast = function (data) {
-  nextWeatherContainer.innerHTML = ""; // Clear the forecast container
+  fiveDayContainer.innerHTML = "";
   for (let i = 0; i < data.list.length; i++) {
     var forecastPeriod = document.createElement("section");
     forecastPeriod.innerHTML = `
@@ -142,9 +117,7 @@ var showFiveDayForecast = function (data) {
         <p>Wind Speed: ${data.list[i].wind.speed} MPH</p>
         <p>Humidity: ${data.list[i].main.humidity} %</p>
     `;
-    nextWeatherContainer.appendChild(forecastPeriod);
-    
+    fiveDayContainer.appendChild(forecastPeriod);
   }
 };
-console.log(showFiveDayForecast);
 
