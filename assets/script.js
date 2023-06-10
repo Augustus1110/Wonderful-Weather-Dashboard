@@ -56,12 +56,13 @@ function getCurrentWeather(lat, lon) {
 
 //I have to write a function will display the current weather
 var showCurrentWeather = function (data) {
-  city.textContent = data.name;
-  date.textContent = dayjs.unix(data.dt).format("MM/DD/YYYY");
-  temperature.textContent = "Temperature: " + data.main.temp + " °F";
-  wind.textContent = "Wind: " + data.wind.speed + " mph";
-  humidity.textContent = "Humidity: " + data.main.humidity + "%";
-};
+    city.textContent = data.name;
+    date.innerHTML = dayjs.unix(data.dt).format("dddd") + "<br>" + "<br>" + dayjs.unix(data.dt).format("MMMM D, YYYY");
+    temperature.textContent = "Temperature: " + data.main.temp + " °F";
+    wind.textContent = "Wind: " + data.wind.speed + " mph";
+    humidity.textContent = "Humidity: " + data.main.humidity + "%";
+  };
+  
 
 console.log(showCurrentWeather);
 
@@ -90,7 +91,6 @@ function fiveDayCoordinates(city) {
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 //I have to write a function that will get the 5 day forecast based on the coordinates
-
 function getFiveDayForecast(lat, lon) {
   var url = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=b12be20cab068cdc779326a35a3ed4c2&units=imperial";
   fetch(url)
@@ -108,7 +108,8 @@ var showFiveDayForecast = function (data) {
   for (let i = 0; i < data.list.length; i++) {
     var fiveDayPeriod = document.createElement("section");
     fiveDayPeriod.innerHTML = `
-        <h2>${dayjs.unix(data.list[i].dt).format("MM/DD/YYYY")}</h2>
+        <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
+        <h2>${dayjs.unix(data.list[i].dt).format("MMMM D")}</h2>
         <p>Temperature: ${data.list[i].main.temp} °F</p>
         <p>Wind: ${data.list[i].wind.speed} MPH</p>
         <p>Humidity: ${data.list[i].main.humidity}%</p>
