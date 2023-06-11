@@ -1,4 +1,3 @@
-
 var userInput = document.getElementById("user_input");
 var submitButton = document.getElementById("submit_button");
 var currentWeather = document.getElementById("current_weather");
@@ -10,12 +9,21 @@ var humidity = document.getElementById("humidity");
 var fiveDayForecast = document.getElementById("five_day_forecast");
 var fiveDayWeather = document.getElementById("five_day_weather");
 var fiveDayContainer = document.getElementById("five_day_container");
-var previousCitiesContainer = document.getElementById("previous_cities_container");
-
+var pastCityContainer = document.getElementById("past_city_container");
 
 //Event listener for the submit button, when the user clicks the Submit button, the getCurrentCoordinates function will run
+
 submitButton.addEventListener("click", function () {
   getCurrentCoordinates(userInput.value);
+  userInput.value = ""; 
+});
+
+// Event listener for the Enter key press
+userInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    getCurrentCoordinates(userInput.value);
+    userInput.value = "";
+  }
 });
 
 //All API calls and keys are from OpenWeatherMap.org
@@ -42,9 +50,8 @@ function getCurrentCoordinates(city) {
       var lon = data[0].lon;
       cityStorage.unshift(city);
       cityStorage = cityStorage.slice(0,10)
-      console.log(cityStorage);
       localStorage.setItem("city", JSON.stringify(cityStorage));
-      showPreviousCities()
+      showPastCities()
       getCurrentWeather(lat, lon);
       getFiveDayForecast(lat, lon);
     });
@@ -71,29 +78,26 @@ var showCurrentWeather = function (data) {
     humidity.textContent = "Humidity: " + data.main.humidity + "%";
   };
   
-
-console.log(showCurrentWeather);
-
 //5-Day Geocoding API call
 //api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 //5-Day Personal Key
 //b12be20cab068cdc779326a35a3ed4c2
 
-// function to get coordinates using the 5-Day API call
-function fiveDayCoordinates(city) {
-  var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=b12be20cab068cdc779326a35a3ed4c2";
-  fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-        var lat = data[0].lat;
-        var lon = data[0].lon;
-        getCurrentWeather(lat, lon);
-        getFiveDayForecast(lat, lon);
-      });
-}
+//function to get coordinates using the 5-Day API call
+// function fiveDayCoordinates(city) {
+//   var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=b12be20cab068cdc779326a35a3ed4c2";
+//   fetch(url)
+//     .then(function (response) {
+//       return response.json();
+//     })
+//     .then(function (data) {
+//         var lat = data[0].lat;
+//         var lon = data[0].lon;
+//         getCurrentWeather(lat, lon);
+//         getFiveDayForecast(lat, lon);
+//       });
+// }
 
 //5-Day Lat Long API call
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
@@ -106,7 +110,6 @@ function getFiveDayForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       showFiveDayForecast(data);
     })
 }
@@ -130,8 +133,8 @@ var showFiveDayForecast = function (data) {
 //check local storage when the page loads
 //if something is in local storage, get it and display it
 
-function showPreviousCities() {
-  previousCitiesContainer.innerHTML = "";
+function showPastCities() {
+  pastCityContainer.innerHTML = "";
   for (let i = 0; i < cityStorage.length; i++) {
     let cityName = cityStorage[i]
     var cityButton = document.createElement("button");
@@ -139,19 +142,16 @@ function showPreviousCities() {
     cityButton.onclick = function () {
       getCurrentCoordinates(cityName);
     }
-    previousCitiesContainer.appendChild(cityButton);
+    pastCityContainer.appendChild(cityButton);
   }
 }
 
 var cityStorage;
 
 var cityStorageRaw = localStorage.getItem("city");
-console.log(cityStorageRaw);
-console.log(typeof cityStorageRaw); 
-
 if (cityStorageRaw) {
   cityStorage = JSON.parse(cityStorageRaw);
-  showPreviousCities();
+  showPastCities();
 }
 else {
   cityStorage = [];
