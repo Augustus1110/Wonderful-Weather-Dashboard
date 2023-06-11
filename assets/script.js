@@ -117,18 +117,25 @@ function getFiveDayForecast(lat, lon) {
 //I have to write a function that will display the 5 day forecast
 var showFiveDayForecast = function (data) {
   fiveDayContainer.innerHTML = "";
+  var forecastRow = document.createElement("div");
+    forecastRow.className = "row five-columns";
   for (let i = 3; i < data.list.length; i+=8) {
     var fiveDayPeriod = document.createElement("section");
     fiveDayPeriod.innerHTML = `
-        <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
-        <h2>${dayjs.unix(data.list[i].dt).format("MMMM D")}</h2>
-        <p>Temperature: ${data.list[i].main.temp} °F</p>
-        <p>Wind: ${data.list[i].wind.speed} MPH</p>
-        <p>Humidity: ${data.list[i].main.humidity}%</p>
-    `;
-    fiveDayContainer.appendChild(fiveDayPeriod);
+    <div class="card">
+        <div class="card-body">
+          <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
+          <h2>${dayjs.unix(data.list[i].dt).format("MMMM D")}</h2>
+          <p>Temperature: ${data.list[i].main.temp} °F</p>
+          <p>Wind: ${data.list[i].wind.speed} MPH</p>
+          <p>Humidity: ${data.list[i].main.humidity}%</p>
+        </div>
+    </div>
+    `; 
+    forecastRow.appendChild(fiveDayPeriod);
   }
-};
+    fiveDayContainer.appendChild(forecastRow);
+  };
 
 //check local storage when the page loads
 //if something is in local storage, get it and display it
