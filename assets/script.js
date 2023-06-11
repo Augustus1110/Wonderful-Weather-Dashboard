@@ -10,6 +10,7 @@ var humidity = document.getElementById("humidity");
 var fiveDayForecast = document.getElementById("five_day_forecast");
 var fiveDayWeather = document.getElementById("five_day_weather");
 var fiveDayContainer = document.getElementById("five_day_container");
+var previousCitiesContainer = document.getElementById("previous_cities_container");
 
 
 //Event listener for the submit button, when the user clicks the Submit button, the getCurrentCoordinates function will run
@@ -39,6 +40,11 @@ function getCurrentCoordinates(city) {
     .then(function (data) {
       var lat = data[0].lat;
       var lon = data[0].lon;
+      cityStorage.unshift(city);
+      cityStorage = cityStorage.slice(0,10)
+      console.log(cityStorage);
+      localStorage.setItem("city", JSON.stringify(cityStorage));
+      showPreviousCities()
       getCurrentWeather(lat, lon);
       getFiveDayForecast(lat, lon);
     });
@@ -100,6 +106,7 @@ function getFiveDayForecast(lat, lon) {
       return response.json();
     })
     .then(function (data) {
+      console.log(data);
       showFiveDayForecast(data);
     })
 }
@@ -107,7 +114,7 @@ function getFiveDayForecast(lat, lon) {
 //I have to write a function that will display the 5 day forecast
 var showFiveDayForecast = function (data) {
   fiveDayContainer.innerHTML = "";
-  for (let i = 0; i < data.list.length; i++) {
+  for (let i = 3; i < data.list.length; i+=8) {
     var fiveDayPeriod = document.createElement("section");
     fiveDayPeriod.innerHTML = `
         <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
@@ -119,4 +126,34 @@ var showFiveDayForecast = function (data) {
     fiveDayContainer.appendChild(fiveDayPeriod);
   }
 };
+
+//check local storage when the page loads
+//if something is in local storage, get it and display it
+
+function showPreviousCities() {
+  previousCitiesContainer.innerHTML = "";
+  for (let i = 0; i < cityStorage.length; i++) {
+    let cityName = cityStorage[i]
+    var cityButton = document.createElement("button");
+    cityButton.innerHTML = cityName
+    cityButton.onclick = function () {
+      getCurrentCoordinates(cityName);
+    }
+    previousCitiesContainer.appendChild(cityButton);
+  }
+}
+
+var cityStorage;
+
+var cityStorageRaw = localStorage.getItem("city");
+console.log(cityStorageRaw);
+console.log(typeof cityStorageRaw); 
+
+if (cityStorageRaw) {
+  cityStorage = JSON.parse(cityStorageRaw);
+  showPreviousCities();
+}
+else {
+  cityStorage = [];
+}
 
