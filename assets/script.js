@@ -40,7 +40,7 @@ userInput.addEventListener("keydown", function (event) {
 
 // Function that will get the coordinates of the city that the user inputs
 function getCurrentCoordinates(city) {
-  var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=b12be20cab068cdc779326a35a3ed4c2";
+  var url = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=b12be20cab068cdc779326a35a3ed4c2";
   fetch(url)
     .then(function (response) {
       return response.json();
@@ -77,7 +77,7 @@ var showCurrentWeather = function (data) {
     temperature.textContent = "Temperature: " + data.main.temp + " °F";
     wind.textContent = "Wind: " + data.wind.speed + " mph";
     humidity.textContent = "Humidity: " + data.main.humidity + "%";
-    document.getElementById('icon').innerHTML = `<img src='http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png'/>`
+    document.getElementById('icon').innerHTML = `<img src='https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png'/>`
   };
   
 // 5-Day Geocoding API call
@@ -113,7 +113,7 @@ var showFiveDayForecast = function (data) {
         <div class="card-body">
           <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
           <h2>${dayjs.unix(data.list[i].dt).format("MMMM D")}</h2>
-          <img src='http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png'/>
+          <img src='https://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png'/>
           <p>Temperature: ${data.list[i].main.temp} °F</p>
           <p>Wind: ${data.list[i].wind.speed} MPH</p>
           <p>Humidity: ${data.list[i].main.humidity}%</p>
