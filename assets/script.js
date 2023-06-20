@@ -65,6 +65,7 @@ function getCurrentWeather(lat, lon) {
       return response.json();
     })
     .then(function (data) {
+      console.log(data);
       showCurrentWeather(data);
     });
 }
@@ -76,6 +77,7 @@ var showCurrentWeather = function (data) {
     temperature.textContent = "Temperature: " + data.main.temp + " °F";
     wind.textContent = "Wind: " + data.wind.speed + " mph";
     humidity.textContent = "Humidity: " + data.main.humidity + "%";
+    document.getElementById('icon').innerHTML = `<img src='http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png'/>`
   };
   
 //5-Day Geocoding API call
@@ -83,21 +85,6 @@ var showCurrentWeather = function (data) {
 
 //5-Day Personal Key
 //b12be20cab068cdc779326a35a3ed4c2
-
-//function to get coordinates using the 5-Day API call
-// function fiveDayCoordinates(city) {
-//   var url = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=b12be20cab068cdc779326a35a3ed4c2";
-//   fetch(url)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//         var lat = data[0].lat;
-//         var lon = data[0].lon;
-//         getCurrentWeather(lat, lon);
-//         getFiveDayForecast(lat, lon);
-//       });
-// }
 
 //5-Day Lat Long API call
 //https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
@@ -126,9 +113,11 @@ var showFiveDayForecast = function (data) {
         <div class="card-body">
           <h2>${dayjs.unix(data.list[i].dt).format("dddd")}</h2>
           <h2>${dayjs.unix(data.list[i].dt).format("MMMM D")}</h2>
+          <img src='http://openweathermap.org/img/wn/${data.list[i].weather[0].icon}@2x.png'/>
           <p>Temperature: ${data.list[i].main.temp} °F</p>
           <p>Wind: ${data.list[i].wind.speed} MPH</p>
           <p>Humidity: ${data.list[i].main.humidity}%</p>
+
         </div>
     </div>
     `; 
@@ -163,4 +152,5 @@ if (cityStorageRaw) {
 else {
   cityStorage = [];
 }
+
 

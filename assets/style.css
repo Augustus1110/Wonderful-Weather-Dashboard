@@ -6,3 +6,20 @@
     padding: 2%;
 }
 
+body {
+    background-color: #00ffc3;
+    margin: 10px;
+}
+
+#five_day_weather{
+    background-color: antiquewhite;
+    
+}
+
+.today{
+    margin-left:10px
+}
+
+#submit_button{
+    background-color: blue;
+}
