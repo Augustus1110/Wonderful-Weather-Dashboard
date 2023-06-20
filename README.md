@@ -34,7 +34,7 @@ To run this project locally, follow these steps:
 
 ## Screenshots
 
-![Weather Dashboard](weather-dashboard.png)
+![Weather Dashboard](assets/weather-dashboard.png)
 
 ## Credits
 
@@ -42,5 +42,7 @@ This project was developed by Donahi Casas-Silva. It was created as part of the 
 
 ### Instructors/Tutors/Collaborators:
 
-This scheduler was created with help from the following people and resources:
-UC Berkeley Extension Bootcamp course instructor, Teaching Assistants and Zoom video tutors
+This project was created with help from the following people and resources:
+
+Monique Merzoug as my study partner, and the
+UC Berkeley Extension Bootcamp course instructor, Teaching Assistants and Zoom video tutors who provided guidance and assistance.
