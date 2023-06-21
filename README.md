@@ -5,8 +5,9 @@ This project is a weather dashboard application that allows users to search for 
 ## Technologies Used
 
 - HTML
-- CSS
 - JavaScript
+- CSS
+- Bootstrap
 
 ## Features
 

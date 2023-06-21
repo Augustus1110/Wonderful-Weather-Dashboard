@@ -32,7 +32,7 @@ userInput.addEventListener("keydown", function (event) {
 // b12be20cab068cdc779326a35a3ed4c2
 
 // Current weather geocoding API call
-// http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+// https://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 
 // Current weather latitude and longitude API call
 // api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}//
